@@ -13,7 +13,7 @@ conf = ConnectionConfig(
     MAIL_FROM=settings.mail_from,
     MAIL_PORT=settings.mail_port,
     MAIL_SERVER=settings.mail_server,
-    MAIL_FROM_NAME="Cor Auth",
+    MAIL_FROM_NAME="COR-Identity",
     MAIL_STARTTLS=False,
     MAIL_SSL_TLS=True,
     USE_CREDENTIALS=True,
@@ -50,6 +50,7 @@ async def send_email(email: EmailStr, host: str):
     except ConnectionErrors as err:
         print(err)
 
+
 async def send_email_code(email: EmailStr, host: str, verification_code):
     """
     The send_email function sends an email to the user with a link to confirm their email address.
@@ -61,7 +62,7 @@ async def send_email_code(email: EmailStr, host: str, verification_code):
     :param host: str: Pass the hostname of the server to the template
     :return: A coroutine object
     """
-    print('sending email')
+    print("sending email")
     try:
         message = MessageSchema(
             subject="Confirm your email ",
@@ -75,6 +76,6 @@ async def send_email_code(email: EmailStr, host: str, verification_code):
 
         fm = FastMail(conf)
         await fm.send_message(message, template_name="email_templates.html")
-        print('sending email done')
+        print("sending email done")
     except ConnectionErrors as err:
         print(err)
