@@ -17,7 +17,6 @@ from sqlalchemy.orm import Session
 from random import randint
 
 from cor_auth.database.db import get_db
-from cor_auth.database.models import Verification
 from cor_auth.schemas import (
     UserModel,
     ResponseUser,
@@ -28,7 +27,7 @@ from cor_auth.schemas import (
 )
 from cor_auth.repository import users as repository_users
 from cor_auth.services.auth import auth_service
-from cor_auth.services.email import send_email, send_email_code
+from cor_auth.services.email import send_email_code
 from cor_auth.conf.config import settings
 
 router = APIRouter(prefix="/auth", tags=["Authorization"])
@@ -42,8 +41,6 @@ ALGORITHM = settings.algorithm
 )
 async def signup(
     body: UserModel,
-    background_tasks: BackgroundTasks,
-    request: Request,
     db: Session = Depends(get_db),
 ):
     """
@@ -62,18 +59,13 @@ async def signup(
         )
     body.password = auth_service.get_password_hash(body.password)
     new_user = await repository_users.create_user(body, db)
-    # background_tasks.add_task(
-    #     send_email,
-    #     new_user.email,
-    #     request.base_url,
-    # )
+    print(f"{body.email} user successfully created")
     return {"user": new_user, "detail": "User successfully created"}
 
 
 @router.post(
     "/login",
     response_model=TokenModel,
-    description="No more than 10 requests per minute",
 )
 async def login(
     body: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
@@ -95,9 +87,9 @@ async def login(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid password"
         )
     access_token = await auth_service.create_access_token(
-        data={"sub": user.email, "id": user.id}, expires_delta=3600
+        data={"id": user.id}, expires_delta=3600
     )
-    refresh_token = await auth_service.create_refresh_token(data={"sub": user.email, "id": user.id})
+    refresh_token = await auth_service.create_refresh_token(data={"id": user.id})
     await repository_users.update_token(user, refresh_token, db)
     return {
         "access_token": access_token,
@@ -109,8 +101,6 @@ async def login(
 @router.get(
     "/refresh_token",
     response_model=TokenModel,
-    description="No more than 10 requests per minute",
-    dependencies=[Depends(RateLimiter(times=10, seconds=60))],
 )
 async def refresh_token(
     credentials: HTTPAuthorizationCredentials = Security(security),
@@ -126,16 +116,16 @@ async def refresh_token(
     :return: A new access token and a new refresh token
     """
     token = credentials.credentials
-    email = await auth_service.decode_refresh_token(token)
-    user = await repository_users.get_user_by_email(email, db)
+    id = await auth_service.decode_refresh_token(token)
+    user = await repository_users.get_user_by_uuid(id, db)
     if user.refresh_token != token:
         await repository_users.update_token(user, None, db)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid refresh token"
         )
 
-    access_token = await auth_service.create_access_token(data={"sub": email, "id": user.id})
-    refresh_token = await auth_service.create_refresh_token(data={"sub": email, "id": user.id})
+    access_token = await auth_service.create_access_token(data={"id": user.id})
+    refresh_token = await auth_service.create_refresh_token(data={"id": user.id})
     user.refresh_token = refresh_token
     db.commit()
     await repository_users.update_token(user, refresh_token, db)
@@ -146,67 +136,6 @@ async def refresh_token(
     }
 
 
-# @router.get("/confirmed_email/{token}")
-# async def confirmed_email(token: str, db: Session = Depends(get_db)):
-#     """
-#     The confirmed_email function is used to confirm a user's email address.
-#     It takes the token from the URL and uses it to get the user's email address.
-#     Then, it checks if that user exists in our database, and if they do not exist,
-#     an HTTP 400 error is raised. If they do exist but their account has already been confirmed,
-#     then a message saying so will be returned. Otherwise (if they are found in our database
-#     but have not yet confirmed their account), we call repository_users' confirmed_email function
-#     with that email as its argument
-
-#     :param token: str: Get the token from the url
-#     :param db: Session: Get the database session
-#     :return: A json object with a message
-#     """
-#     email = await auth_service.get_email_from_token(token)
-#     user = await repository_users.get_user_by_email(email, db)
-#     if user is None:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST, detail="Verification error"
-#         )
-#     if user.confirmed:
-#         return {"message": "Your email is already confirmed"}
-#     await repository_users.confirmed_email(email, db)
-#     return {"message": "Email confirmed"}
-
-
-@router.post("/request_email", description="No more than 10 requests per minute")
-async def request_email(
-    body: EmailSchema,
-    background_tasks: BackgroundTasks,
-    request: Request,
-    db: Session = Depends(get_db),
-):
-    """
-    The request_email function is used to send an email to the user with a link that will allow them
-    to confirm their email address. The function takes in the body of the request, which should be a JSON object
-    with one key: &quot;email&quot;. This key's value should be set to the user's email address. If this is not provided,
-    the server will return an error message and status code 400 (Bad Request). If it is provided, then we check if
-    the user has already confirmed their account by checking if they have been assigned a confirmation token or not.
-    If they have already confirmed their account, then
-
-    :param body: EmailSchema: Validate the data sent in the request body
-    :param background_tasks: BackgroundTasks: Add a task to the background tasks queue
-    :param request: Request: Get the base url of the server,
-    :param db: Session: Pass the database session to the repository layer
-    :return: A dict with a message
-    """
-    user = await repository_users.get_user_by_email(body.email, db)
-
-    if user.confirmed:
-        return {"message": "Your email is already confirmed"}
-    if user:
-        background_tasks.add_task(
-            send_email,
-            user.email,
-            request.base_url,
-        )
-    return {"message": "Check your email for confirmation."}
-
-
 # Маршрут для отправки кода подтверждения на почту пользователя
 @router.post("/send_verification_code")
 async def send_verification_code(
@@ -215,33 +144,20 @@ async def send_verification_code(
     request: Request,
     db: Session = Depends(get_db),
 ):
-
     verification_code = randint(100000, 999999)
-
-    # verification_entry = repository_users.get_code_record_by_email(body.email, db)
-    verification_entry = (
-        db.query(Verification).filter(Verification.email == body.email).first()
-    )
-    if verification_entry:
-        print(verification_entry)
-        print("Verification code already sent")
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Verification code already sent",
-        )
 
     exist_user = await repository_users.get_user_by_email(body.email, db)
     if exist_user:
+        print("Account already exists")
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT, detail="Account already exists"
         )
-    if exist_user and exist_user.confirmed:
-        return {"message": "Your email is already confirmed"}
 
     if exist_user == None:
         background_tasks.add_task(
             send_email_code, body.email, request.base_url, verification_code
         )
+        print("Check your email for verification code.")
         await repository_users.write_verification_code(
             email=body.email, db=db, verification_code=verification_code
         )
@@ -259,8 +175,10 @@ async def send_verification_code(
         body.email, db, body.verification_code
     )
     if ver_code:
-        return {"message": "Your email is confirmed"}
+        print("Your email is confirmed")
+        return True
     else:
+        print("Invalid verification code")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid verification code"
         )
@@ -268,7 +186,7 @@ async def send_verification_code(
 
 # forgot password route
 """
-Забыли пароль - ввод почты - отправка кода на почту - ввод кода - ввод нового пароля (может повторный ввод пароля и сравнение)
+Забыли пароль -> ввод почты -> отправка кода на почту -> ввод кода -> ввод нового пароля (может повторный ввод пароля и сравнение)
 """
 
 
