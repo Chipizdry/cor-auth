@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Показать поля ввода пароля</title>
+    <style>
+        .password-container {
+            display: none;
+            margin-bottom: 1em;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+        .input-group input {
+            flex: 1;
+        }
+        .toggle-password {
+            cursor: pointer;
+            margin-left: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="password-container">
+        <label for="password">Пароль: </label>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Введите пароль" name="password" minlength="4" maxlength="10" required>
+            <span class="toggle-password" data-target="#password" required>👁️</span>
+        </div>
+    </div>
+
+    <div class="password-container">
+        <label for="confirm-password">Повторите пароль:</label>
+        <div class="input-group">
+            <input type="password" id="confirm-password" placeholder="Подтвердите пароль" minlength="4" maxlength="10" required>
+            <span class="toggle-password" data-target="#confirm-password" required>👁️</span>
+        </div>
+        <br>
+        <input type="submit" value="Зарегистрироваться">
+    </div>
+
+    <br>
+    <input type="button" id="sendCodeButton" value="Отправить код на имейл" onclick="sendVerificationCode()">
+
+    <script>
+        function sendVerificationCode() {
+            const passwordContainers = document.querySelectorAll('.password-container');
+            passwordContainers.forEach(container => {
+                container.style.display = 'block';
+            });
+            document.getElementById('sendCodeButton').style.display = 'none';
+        }
+
+        document.querySelectorAll('.toggle-password').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const target = document.querySelector(this.getAttribute('data-target'));
+                if (target.getAttribute('type') === 'password') {
+                    target.setAttribute('type', 'text');
+                } else {
+                    target.setAttribute('type', 'password');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

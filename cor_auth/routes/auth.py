@@ -149,9 +149,12 @@ async def send_verification_code(
     exist_user = await repository_users.get_user_by_email(body.email, db)
     if exist_user:
         print("Account already exists")
+        return {"message": f"User {body.email} already exist!!!!"}  #Пользователь уже зарегистрирован
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT, detail="Account already exists"
         )
+
+        
 
     if exist_user == None:
         background_tasks.add_task(
