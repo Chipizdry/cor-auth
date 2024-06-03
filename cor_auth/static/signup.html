@@ -24,7 +24,7 @@
                     
                 <div class="password-container" style="display: none;">      
                     <label for="confirm-password">Повторите пароль:</label>
-                    <input type="password" id="confirm-password" placeholder="Подтвердите пароль"  minlength="4" maxlength="10" required>
+                    <input type="password" id="confirm-password" placeholder="Подтвердите пароль"  minlength="4" maxlength="10">
                     <span class="toggle-password" data-target="#confirm-password" required>👁️</span>
                     <br>
                     <input type="submit" value="Зарегистрироваться">
@@ -76,6 +76,34 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <script>
             document.getElementById("registrationForm").addEventListener("submit", function(event) {
                 event.preventDefault();
@@ -97,7 +125,6 @@
                     if (xhr.status === 200) {
                     // Обработка успешного ответа от сервера
                     console.log("Регистрация прошла успешно!");
-                    alert('Поздравляем!!! Вы зарегистрированы в COR-Platform');
                     } else {
                     // Обработка ошибки
                     console.error("Произошла ошибка при регистрации.");
