@@ -150,9 +150,11 @@ async def send_verification_code(
 
     exist_user = await repository_users.get_user_by_email(body.email, db)
     if exist_user:
+        #return {"message": "Пользователь уже существует"}
+
         print("Account already exists")
         raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT, detail="Account already exists"
+            status_code=status.HTTP_409_CONFLICT, detail=f"Пользователь  '{body.email}' уже существует"
         )
 
     if exist_user == None:
@@ -207,7 +209,7 @@ async def forgot_password_send_verification_code(
     exist_user = await repository_users.get_user_by_email(body.email, db)
     if exist_user == None:  
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Пользователь  '{body.email}' не зарегистрирован !!!"
         )
     if exist_user:
         background_tasks.add_task(
