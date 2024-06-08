@@ -30,13 +30,41 @@
     <meta name="facebook-sdk-version" content="v15.0" />
     <script src="https://connect.facebook.net/en_US/sdk.js"></script>
 
-   <style>
-        /* Стили для выравнивания кнопки Google по центру */
-        .g-signin2 {
-            display: block;
-            margin: 0 auto; /* Центрирование по горизонтали */
+    <style>
+        button,
+        .google-signin-btn,
+        .custom-btn {
+            font-family: inherit; /* Наследовать шрифт от родительского элемента */
+            font-size: 16px; /* Размер шрифта */
         }
-    </style> 
+
+        .custom-btn img {
+            margin-right: 10px;
+        }
+
+        .g-signin2 {
+            display: none; /* Скрыть стандартную кнопку */
+        }
+
+        .google-signin-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4285f4;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .google-signin-btn img {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -49,8 +77,20 @@
         <button type="submit">Войти</button>
     </form>
     <div id="message"></div>
-    <p><div class="g-signin2" data-onsuccess="onSignIn"></div></p>
-    <p><fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></p>
+    <p>
+        <!-- Скрытая стандартная кнопка Google -->
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        
+        <!-- Кастомная кнопка Google, имитирующая поведение стандартной -->
+        <button class="google-signin-btn" onclick="signInWithGoogle()">
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Icon" width="20" height="20"> Войти через Google
+        </button>
+    </p>
+    <!-- Кастомная кнопка Facebook -->
+    <button class="custom-btn facebook-btn" onclick="signInWithFacebook()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Icon" width="20" height="20"> Войти через Facebook
+    </button>
+
     <h3>Регистрация</h3>
     <button onclick="window.location.href='/static/signup.html'" class="registration-button">Регистрация</button>
     <div id="gSignInWrapper"></div>
@@ -97,12 +137,34 @@
             xhr.send(params);
         });
     });
-</script>
 
-<script>
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId());
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+        // Здесь вы можете отправить данные на ваш сервер для аутентификации
+    }
+
+    function signInWithGoogle() {
+        console.log('Google sign-in button clicked');
+        var auth2 = gapi.auth2.getAuthInstance();
+        if (auth2) {
+            auth2.signIn().then(function(googleUser) {
+                onSignIn(googleUser);
+            }, function(error) {
+                console.error('Error signing in with Google: ', error);
+            });
+        } else {
+            console.error('Google API not initialized.');
+        }
+    }
+
     window.fbAsyncInit = function() {
         FB.init({
             appId      : '1580389042741794',
+            cookie     : true,
             xfbml      : true,
             version    : 'v15.0'
         });
@@ -115,6 +177,36 @@
         js.src = "https://connect.facebook.net/en_US/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+
+    function signInWithFacebook() {
+        console.log('Facebook sign-in button clicked');
+        FB.login(function(response) {
+            if (response.status === 'connected') {
+                var accessToken = response.authResponse.accessToken;
+                FB.api('/me', {fields: 'name,email,picture'}, function(profile) {
+                    console.log('ID: ' + profile.id);
+                    console.log('Name: ' + profile.name);
+                    console.log('Image URL: ' + profile.picture.data.url);
+                    console.log('Email: ' + profile.email);
+                    // Здесь вы можете отправить данные на ваш сервер для аутентификации
+                });
+            } else {
+                console.log('Not authenticated with Facebook.');
+            }
+        }, {scope: 'public_profile,email'});
+    }
+
+    function loadGoogleAPI() {
+        gapi.load('auth2', function() {
+            gapi.auth2.init().then(function() {
+                console.log('Google API initialized');
+            }, function(error) {
+                console.error('Error initializing Google API: ', error);
+            });
+        });
+    }
+
+    window.onload = loadGoogleAPI;
 </script>
 </body>
 </html>
