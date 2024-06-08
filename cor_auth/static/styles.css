@@ -1,19 +1,112 @@
-body ,html {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    padding: 20px;
-}
 
-.container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+
+body, html {
+    height: 100%;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    font-family: Arial, sans-serif;
 }
+
+
+.container {
+    width: 250px; /* Установите фиксированную ширину контейнера */
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+/*
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}  */
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.input-wrapper {
+    position: relative;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="button"],
+input[type="submit"],
+button {
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover,
+button:hover {
+    background-color: #0056b3;
+}
+
+ .toggle-password {
+        position: absolute;
+    right: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+    }
+
+
+#message {
+    color: red;
+}
+#messageOk {
+    color: green;
+}
+button, input[type="submit"], input[type="button"] {
+    padding: 10px;
+    border: none;
+    background-color: #dc56a8;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 200px;
+}
+button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+    background-color: #dc56a8;
+}
+
+
+
+
 
 h1 {
     color: #333;
@@ -22,11 +115,6 @@ h1 {
 
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 label {
     display: block;
@@ -45,7 +133,8 @@ input[type="password"] {
 }
 
 input[type="submit"] {
-    background-color: #4CAF50;
+    width: 200px;  /*фиксированная ширина */
+    background-color: #dc56a8;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -55,48 +144,39 @@ input[type="submit"] {
 
 
 input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #dc56a8;
 }
 
 .registration-button {
-    background-color: blue;
+    background-color: #dc56a8;
     color: white;
     padding: 10px 20px;
     margin: 0 auto;
     display: block;
 }
-/*                               */
-
 
 .password-container {
-    position: relative;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
 }
 
-.password-container input {
-    padding-right: 30px; /* место для иконки */
-}
-
-
-
-.password-container .toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
 
 
 .hidden {
     display: none;
 }
-
+/*
 .message {
     margin-top: 20px;
     font-weight: bold;
 }
-
+*/
+.message {
+    font-size: 14px; /* Уменьшите размер шрифта по необходимости */
+    text-align: center; /* Центрируйте текст */
+    margin-top: 10px; /* Дополнительный отступ сверху для лучшей читаемости */
+    font-weight: bold;
+}
 
 /* Кнопка Google */
 .customGPlusSignIn {
@@ -144,6 +224,6 @@ input[type="submit"]:hover {
     margin-top: 20px;
 }
 input[type="button"].registration-button:hover {
-    background-color: #45a049;
+    background-color: #dc56a8;
 }
 
