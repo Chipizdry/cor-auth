@@ -19,6 +19,7 @@ body, html {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
+    text-align: center;
 }
 /*
 .container {
@@ -101,7 +102,8 @@ button, input[type="submit"], input[type="button"] {
     max-width: 200px;
 }
 button:hover, input[type="submit"]:hover, input[type="button"]:hover {
-    background-color: #dc56a8;
+   /* background-color: #dc56a8;*/
+    background-color: #981666;
 }
 
 
@@ -109,6 +111,14 @@ button:hover, input[type="submit"]:hover, input[type="button"]:hover {
 
 
 h1 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+
+}
+
+
+h3 {
     color: #333;
     margin-bottom: 20px;
     text-align: center;
@@ -134,7 +144,8 @@ input[type="password"] {
 
 input[type="submit"] {
     width: 200px;  /*фиксированная ширина */
-    background-color: #dc56a8;
+    background-color: #dc56a8; 
+   /* background-color: #981666; */
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -144,11 +155,12 @@ input[type="submit"] {
 
 
 input[type="submit"]:hover {
-    background-color: #dc56a8;
+    background-color: #981666;
 }
 
 .registration-button {
-    background-color: #dc56a8;
+    background-color: #dc56a8; 
+  /*  background-color: #981666; */
     color: white;
     padding: 10px 20px;
     margin: 0 auto;
@@ -165,18 +177,21 @@ input[type="submit"]:hover {
 .hidden {
     display: none;
 }
-/*
-.message {
-    margin-top: 20px;
-    font-weight: bold;
-}
-*/
+
+
 .message {
     font-size: 14px; /* Уменьшите размер шрифта по необходимости */
     text-align: center; /* Центрируйте текст */
     margin-top: 10px; /* Дополнительный отступ сверху для лучшей читаемости */
     font-weight: bold;
 }
+
+.registration-title, .forgot-password-link {
+    text-align: center;
+}
+
+
+
 
 /* Кнопка Google */
 .customGPlusSignIn {
@@ -196,6 +211,8 @@ input[type="submit"]:hover {
   .customGPlusSignIn:hover {
     background-color: #e74b37;
   }
+
+
   
   /* Иконка Google */
   .icon {
@@ -227,3 +244,9 @@ input[type="button"].registration-button:hover {
     background-color: #dc56a8;
 }
 
+.g-signin2,
+.fb-login-button {
+    /* Задайте требуемый размер */
+    width: 150px;
+    height: 30px; /* Выберите подходящую высоту */
+}
