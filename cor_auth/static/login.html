@@ -1,6 +1,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,6 +107,10 @@
 </div>
 
 <script>
+
+
+
+
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('login-form');
         const messageDiv = document.getElementById('message');
@@ -128,15 +141,52 @@
                             window.location.href = "https://cor-platform.azurewebsites.net/?access_token=" + response.access_token;
                         }, 500);
                     } else {
-                        console.error("Произошла ошибка при входе.");
-                        messageDiv.innerText = "Ошибка входа";
-                        messageDiv.style.color = 'red';
+                      
+
+                        const errorMessage = getErrorMessage(xhr.status, messageDiv); // Передаем messageDiv в функцию
+                       
+                    console.error("Произошла ошибка при входе.");
+                    messageDiv.innerText = errorMessage;
+                    messageDiv.style.color = 'red';
                     }
                 }
             };
+
+
+          
+
             xhr.send(params);
         });
     });
+
+
+
+                                                                    function getErrorMessage(status, messageDiv) {
+                                                                      switch(status) {
+                                                                          case 401:
+                                                                              messageDiv.innerText = "Неверный логин или пароль!";
+                                                                              messageDiv.style.color = 'red';
+                                                                              return "Неверный логин или пароль.";
+                                                                           case 400:
+                                                                             messageDiv.innerText = "Пользователь не зарегистрирован!";
+                                                                             messageDiv.style.color = 'red';
+                                                                                return "Пользователь не зарегистрирован!!!";
+                                                                           case 403:
+                                                                                  return "Доступ запрещен.";
+                                                                                        // Добавьте другие кейсы по мере необходимости
+                                                                                default:
+                                                                                console.error("Произошла ошибка при входе.");
+                                                                                  messageDiv.innerText = "Ошибка входа";
+                                                                                  messageDiv.style.color = 'red';
+                                                                                     return "Произошла ошибка при входе.";
+                                                                                          }
+                                                                                            }
+
+
+
+
+
+
 
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
