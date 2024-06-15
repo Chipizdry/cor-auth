@@ -29,7 +29,6 @@ from cor_auth.repository import users as repository_users
 from cor_auth.services.auth import auth_service
 from cor_auth.services.email import send_email_code, send_email_code_forgot_password
 from cor_auth.conf.config import settings, private_key
-from urllib.parse import urlencode
 
 router = APIRouter(prefix="/auth", tags=["Authorization"])
 security = HTTPBearer()
@@ -61,7 +60,7 @@ async def signup(
     body.password = auth_service.get_password_hash(body.password)
     new_user = await repository_users.create_user(body, db)
     print(f"{body.email} user successfully created")
-    return {"user": new_user, "detail": "User successfully created"}        
+    return {"user": new_user, "detail": "User successfully created"}
 
 
 @router.post(
@@ -69,8 +68,7 @@ async def signup(
     response_model=TokenModel,
 )
 async def login(
-    request: Request,
-    body: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db),
+    body: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
 ):
     """
     The login function is used to authenticate a user.
@@ -82,30 +80,23 @@ async def login(
     user = await repository_users.get_user_by_email(body.username, db)
     if user is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Пользователь не найден / неверный имейл"    #Возврат сообщения что пользователь не найден/неправильный имейл
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email"
         )
     if not auth_service.verify_password(body.password, user.password):
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Неверный пароль"
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid password"
         )
     access_token = await auth_service.create_access_token(
-        data={"oid": user.id}, expires_delta=3600
+        data={"id": user.id}, expires_delta=3600
     )
     refresh_token = await auth_service.create_refresh_token(data={"id": user.id})
     await repository_users.update_token(user, refresh_token, db)
-    redirect_url = "https://cor-identity-01s.cor-medical.ua"
-    # query_params = {
-    #     "access_token": access_token,
-    #     "refresh_token": refresh_token,
-    #     "redirectUrl": "https://cor-identity-01s.cor-medical.ua",
-    # }
-    # redirect_url_with_params = f"{redirect_url}?{urlencode(query_params)}"
-    # return RedirectResponse(redirect_url_with_params, status_code=302)       #Редирект на платформу с передачей токена 
+    redirect_url = f"https://cor-platform.azurewebsites.net/?access_token={access_token}"
+    #return RedirectResponse(redirect_url)                                                      #Редирект на платформу с передачей токена 
     return {
         "access_token": access_token,
         "refresh_token": refresh_token,
         "token_type": "bearer",
-        "redirectUrl": redirect_url
     }
 
 
@@ -135,8 +126,8 @@ async def refresh_token(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid refresh token"
         )
 
-    access_token = await auth_service.create_access_token(data={"oid": user.id})
-    refresh_token = await auth_service.create_refresh_token(data={"oid": user.id})
+    access_token = await auth_service.create_access_token(data={"id": user.id})
+    refresh_token = await auth_service.create_refresh_token(data={"id": user.id})
     user.refresh_token = refresh_token
     db.commit()
     await repository_users.update_token(user, refresh_token, db)
@@ -206,7 +197,7 @@ async def confirm_email(
 """
 
 
-@router.post("/forgot_password") # Маршрут проверки почты в случае если забыли пароль 
+@router.post("/forgot password") # Маршрут проверки почты в случае если забыли пароль 
 async def forgot_password_send_verification_code(
     body: EmailSchema,
     background_tasks: BackgroundTasks,
@@ -218,7 +209,7 @@ async def forgot_password_send_verification_code(
     exist_user = await repository_users.get_user_by_email(body.email, db)
     if exist_user == None:  
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Пользователь не существует"
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Пользователь  '{body.email}' не зарегистрирован !!!"
         )
     if exist_user:
         background_tasks.add_task(
@@ -230,15 +221,15 @@ async def forgot_password_send_verification_code(
     return {"message": "Check your email for verification code."}
 
 
-@router.patch("/change_password")
+@router.patch("/change password")
 async def change_password(body: ChangePasswordModel, db: Session = Depends(get_db)):
     user = await repository_users.get_user_by_email(body.email, db)
     if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND ,detail="Пользователь не найден")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND ,detail="User not found")
     else:
         if body.password:
             await repository_users.change_user_password(body.email, body.password, db)
-            return {"message": f"User '{body.email}' changed his password"}
+            return {"message": f"User {body.email} is changed his password"}
         else:
             print("Incorrect password input")
             raise HTTPException(
