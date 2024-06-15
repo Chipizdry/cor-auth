@@ -60,6 +60,7 @@
              <div class="password-container" style="display: none;" >
                <label for="password">Пароль: </label>    
                <div class="input-wrapper">
+               <div id="password-message" class="error-message"></div>
                <input type="password" id="password"  placeholder="Введите пароль" name="password"  minlength="8" maxlength="15" required>
                <span class="toggle-password" data-target="#password" required>👁️</span>
              </div>
@@ -113,22 +114,37 @@
         const messageDiv = document.getElementById('messageOk');
         const loginButton = document.getElementById('login-button');
         const confirmButton = document.getElementById('confirm-button');
+        const passwordMessageDiv = document.getElementById('password-message');
 
         function checkFields() {
                 const isPasswordEmpty = passwordInput.value === '';
                 const isConfirmPasswordEmpty = confirmPasswordInput.value === '';
-                const isPasswordValidLength = passwordInput.value.length >= 8 && passwordInput.value.length <= 12;
+                
+                const isPasswordValidLength = (passwordInput.value.length >= 8 && passwordInput.value.length <= 12)&&(confirmPasswordInput.value.length >= 8 && confirmPasswordInput.value.length <= 12);
+
 
                 if (isPasswordEmpty || isConfirmPasswordEmpty || !isPasswordValidLength) {
                     confirmButton.classList.add('inactive-button');
                     confirmButton.disabled = true;
                     loginButton.classList.add('inactive-button');
                     loginButton.disabled = true;
+
+                    if (!isPasswordValidLength) {
+                           passwordMessageDiv.innerText = 'Пароль должен содержать от 8 до 12 символов';
+                           passwordMessageDiv.style.color = 'red';
+                           } else {
+                           passwordMessageDiv.innerText = '';
+                        }
+                         
+
+
+
                 } else {
                     confirmButton.classList.remove('inactive-button');
                     confirmButton.disabled = false;
                     loginButton.classList.remove('inactive-button');
                     loginButton.disabled = false;
+                    passwordMessageDiv.innerText = '';
                 }
             }
         // Проверка полей при загрузке страницы

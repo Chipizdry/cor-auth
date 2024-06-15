@@ -8,6 +8,10 @@
 
 
 
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,8 +50,10 @@
             <div class="password-container hidden">
                 <label for="password">Пароль:</label>
                 <div class="input-wrapper">
+                    <div id="password-message" class="error-message"></div>
                     <input type="password" id="password" name="password" placeholder="Введите пароль" minlength="8" maxlength="12" required>
                     <span class="toggle-password" data-target="#password">👁️</span>
+                    
                 </div>
             </div>
 
@@ -92,11 +98,12 @@
             const messageDiv = document.getElementById('messageOk');
             const registrationButton = document.getElementById('registration-button');
             const loginButton = document.getElementById('login-button');
+            const passwordMessageDiv = document.getElementById('password-message');
 
             function checkFields() {
                 const isPasswordEmpty = passwordInput.value === '';
                 const isConfirmPasswordEmpty = confirmPasswordInput.value === '';
-                const isPasswordValidLength = passwordInput.value.length >= 8 && passwordInput.value.length <= 12;
+                const isPasswordValidLength = (passwordInput.value.length >= 6 && passwordInput.value.length <= 20)&&(confirmPasswordInput.value.length >= 6 && confirmPasswordInput.value.length <= 20);
 
                 if (isPasswordEmpty || isConfirmPasswordEmpty || !isPasswordValidLength) {
                     registrationButton.classList.add('inactive-button');
@@ -104,12 +111,21 @@
                     loginButton.classList.add('inactive-button');
                     loginButton.disabled = true;
 
+                    if (!isPasswordValidLength) {
+                           passwordMessageDiv.innerText = 'Пароль должен содержать от 6 до 20 символов';
+                           passwordMessageDiv.style.color = 'red';
+                           } else {
+                           passwordMessageDiv.innerText = '';
+                        }
+                         
+
+
                 } else {
                     registrationButton.classList.remove('inactive-button');
                     registrationButton.disabled = false;
                     loginButton.classList.remove('inactive-button');
                     loginButton.disabled = false;
-
+                    passwordMessageDiv.innerText = '';
                 }
             }
 
@@ -124,6 +140,7 @@
                 if (passwordInput.value !== confirmPasswordInput.value) {
                     alert('Пароли не совпадают!');
                 } else {
+                    alert('Пароли совпадают');
                     const formData = new FormData(form);
                     const formDataJson = {};
 
@@ -176,8 +193,12 @@
                             messageDiv.style.color = 'green';
 
                             setTimeout(() => {
-                                window.location.href = "https://cor-platform.azurewebsites.net/?access_token=" + response.access_token;
-                            }, 500);
+                        const refreshToken = response.refresh_token;
+                        const redirectUrl = 'https://cor-identity-01s.cor-medical.ua';
+                        const accessToken = response.access_token;
+                        const url = `https://cor-platform.azurewebsites.net/?access_token=${accessToken}&refresh_token=${refreshToken}&redirectUrl=${encodeURIComponent(redirectUrl)}`;
+                        window.location.href = url;
+                        }, 500);
                         } else {
                             console.error("Произошла ошибка при входе.");
                             messageDiv.innerText = "Ошибка входа.";

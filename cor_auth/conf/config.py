@@ -2,8 +2,6 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-
-
     sqlalchemy_database_url: str = "sqlite:///./sql_auth.db"
     algorithm: str = "ALGORITHM"
     mail_username: str = "MAIL_USERNAME"

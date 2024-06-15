@@ -284,3 +284,19 @@ a:hover {
 
 .inactive-button:hover {
     background-color: gray;}
+
+
+.error-message {
+    color: red;
+    font-size: 9px;
+    margin-top: 1px; }
+
+
+
+
+
+
+
+
+
+

@@ -15,7 +15,8 @@ from cor_auth.routes import auth, users, record
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="cor_auth/static"), name="static")
 
-origins = ["http://localhost:3000"]
+origins = ["http://localhost:3000",
+    "http://192.168.153.21:3000"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -93,9 +94,9 @@ def healthchecher(db: Session = Depends(get_db)):
 
 
 app.include_router(auth.router, prefix="/api")
-app.include_router(users.router, prefix="/api")
-app.include_router(record.router, prefix="/api")
+# app.include_router(users.router, prefix="/api")
+# app.include_router(record.router, prefix="/api")
 
 
 if __name__ == "__main__":
-    uvicorn.run(app="main:app", reload=True)
+    uvicorn.run(app="main:app", host="0.0.0.0", port= 8000, reload=True)
