@@ -27,17 +27,15 @@ class TokenModel(BaseModel):
     token_type: str = "bearer"
 
 
+class LoginResponseModel(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str = "bearer"
+    redirectUrl: str = "https://cor-identity-01s.cor-medical.ua"
+
+
 class EmailSchema(BaseModel):
     email: EmailStr
-
-
-class RecordModel(BaseModel):
-    record: str = Field(max_length=100)
-
-
-class RecordResponse(RecordModel):
-    id: int
-    record: bytes = Field()
 
 
 class VerificationModel(BaseModel):
@@ -48,4 +46,3 @@ class VerificationModel(BaseModel):
 class ChangePasswordModel(BaseModel):
     email: str
     password: str = Field(min_length=4, max_length=20)
-    
