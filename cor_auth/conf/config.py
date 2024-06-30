@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     encryption_key: str = "ENCRYPTION_KEY"
 
     class Config:
-        env_file = "env.env"
+        env_file = "cor-auth.env"
         env_file_encoding = "utf-8"
 
 
