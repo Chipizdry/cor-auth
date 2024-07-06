@@ -301,6 +301,7 @@ a:hover {
  .language-switcher {
             position: relative;
             margin-left: -109px; /* Отступ справа от панели */
+            /*width: 54px; */
         }
 
         #lang-select {

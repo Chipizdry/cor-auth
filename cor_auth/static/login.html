@@ -15,7 +15,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <link rel="manifest" href="/manifest.json">
+      <!--  <link rel="manifest" href="/manifest.json"> -->
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
         <meta name="theme-color" content="#ffffff">
@@ -100,23 +100,8 @@
     <br><button onclick="window.location.href='/static/forgot-password.html' + '?redirectUrl=' + redirectUrl;" class="registration-button"><span data-translate="forgot-password-button">Forgot password?</span></a><br>
 </div>
 
-<!--<script src="translation.js"></script> -->
-<script>
-    // Установка языка при загрузке страницы
-    document.addEventListener('DOMContentLoaded', function() {
-        const userLang = navigator.language || navigator.userLanguage;
-        const defaultLang = userLang.startsWith('ru') ? 'ru' : userLang.startsWith('en') ? 'en' : userLang.startsWith('zh') ? 'zh' : 'uk';
-        setLanguage(defaultLang);
-    });
 
-    // Функция для переключения языка
-    function setLanguage(language) {
-        document.querySelectorAll("[data-translate]").forEach(function(element) {
-            const key = element.getAttribute("data-translate");
-            element.innerText = translations[language][key];
-        });
-    }
-</script>
+
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     let redirectUrl = urlParams.get('redirectUrl');
@@ -281,7 +266,7 @@
     // Установка языка при загрузке страницы
     document.addEventListener('DOMContentLoaded', function() {
         const userLang = navigator.language || navigator.userLanguage;
-        const defaultLang = userLang.startsWith('ru') ? 'ru' : userLang.startsWith('en') ? 'en' : userLang.startsWith('zh') ? 'zh' : 'uk';
+        const defaultLang = userLang.startsWith('ru') ? 'ru' : userLang.startsWith('en') ? 'en' : userLang.startsWith('zh') ? 'zh' : 'ru';
         setLanguage(defaultLang);
 
         // Инициализация Select2 для выпадающего списка языка
@@ -297,7 +282,7 @@
         if (!state.id) {
             return state.text;
         }
-        var baseUrl = '/static/flags';
+        var baseUrl = 'flags';
         var $state = $(
             '<span><img src="' + baseUrl + '/' + state.element.getAttribute('data-icon') + '" class="flag-img" /> ' + state.text + '</span>'
         );
@@ -309,6 +294,7 @@
         setLanguage(language);
         const langSelect = document.getElementById('lang-select');
         langSelect.value = language;
+        localStorage.setItem('selectedLanguage', language); // Сохраняем выбранный язык в localStorage
     }
 
     // Функция для установки языка
@@ -316,6 +302,7 @@
         document.querySelectorAll("[data-translate]").forEach(function(element) {
             const key = element.getAttribute("data-translate");
             element.innerText = translations[language][key];
+           
         });
     }
 </script>

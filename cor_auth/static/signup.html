@@ -1,71 +1,75 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <title>Регистрация</title>
-</head>
-<body>
-    <div class="container">
-        <h1>Регистрация</h1>
-        <form id="registrationForm">
-            <label for="email">Электронная почта:</label>
-            <input type="email" id="email" name="email" required>
-            <div id="message" class="message"></div>
 
-            <div class="password-container hidden">
-                <label for="password">Пароль:</label>
-                <div class="input-wrapper">
-                    <div id="password-message" class="error-message"></div>
-                    <input type="password" id="password" name="password" placeholder="Введите пароль" minlength="5" maxlength="21" required>
-                    <span class="toggle-password" data-target="#password">👁️</span>
-                    
-                </div>
+
+        <!DOCTYPE html>
+        <html lang="ru">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="icon" type="image/png" href="favicon.png">
+            <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+            <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+            <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+            <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+            <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+            <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+            <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+            <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+            <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+            <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+           <!-- <link rel="manifest" href="/manifest.json">  -->
+            <meta name="msapplication-TileColor" content="#ffffff">
+            <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+            <meta name="theme-color" content="#ffffff">
+            <link rel="stylesheet" type="text/css" href="styles.css">
+            <title data-translate="signup-title">Регистрация</title>
+        </head>
+        <body>
+            <div class="container">
+                <h1 data-translate="signup-title">Регистрация</h1>
+                <form id="registrationForm">
+                    <label for="email" data-translate="email-label">Электронная почта:</label>
+                    <input type="email" id="email" name="email" required>
+                    <div id="message" class="message"></div>
+        
+                    <div class="password-container hidden">
+                        <label for="password" data-translate="password-label">Пароль:</label>
+                        <div class="input-wrapper">
+                           <!-- <div id="password-message" class="error-message"></div> -->
+                            <div id="password-message" class="error-message" data-translate="password-message"></div>
+                            <input type="password" id="password" name="password" placeholder="Введите пароль" minlength="5" maxlength="21" required>
+                            <span class="toggle-password" data-target="#password">👁️</span>
+                        </div>
+                    </div>
+        
+                    <div class="password-container hidden">
+                        <label for="confirm-password" data-translate="confirm-password-label">Повторите пароль:</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="confirm-password" placeholder="Подтвердите пароль" minlength="5" maxlength="21" required>
+                            <span class="toggle-password" data-target="#confirm-password">👁️</span>
+                        </div>
+                    </div>
+        
+                    <button type="button" id="registration-button" class="hidden" data-translate="signup-button">Зарегистрироваться</button>
+                    <button type="button" id="login-button" class="hidden" data-translate="login-button">ВОЙТИ</button>
+        
+                    <button type="button" id="sendVerifCode" onclick="sendVerificationCode()" data-translate="send-code-on-male">Отправить код на имейл</button>
+                    <div id="confirmationMessage" class="confirmationMessage"></div>
+                    <div id="verificationCodeWindow" class="hidden">
+                   <!--     <input type="text" id="verificationCodeInput" class="hidden" placeholder="Введите код">
+                        <input type="button" id="ConfirmationCodeInput" value="Подтвердить" class="hidden" onclick="verifyVerificationCode()"> -->
+                        <input type="text" id="verificationCodeInput" class="hidden" placeholder="Введите код" data-translate="verification-code-placeholder">
+                        <input type="button" id="ConfirmationCodeInput" value="Подтвердить" class="hidden" onclick="verifyVerificationCode()" data-translate="confirm-button">
+                    </div>
+                </form>
+                <div id="messageOk" class="messageOk"></div>
             </div>
-
-            <div class="password-container hidden">
-                <label for="confirm-password">Повторите пароль:</label>
-                <div class="input-wrapper">
-                    <input type="password" id="confirm-password" placeholder="Подтвердите пароль" minlength="5" maxlength="21" required>
-                    <span class="toggle-password" data-target="#confirm-password">👁️</span>
-                </div>
-            </div>
-
-            <button type="button" id="registration-button" class="hidden">Зарегистрироваться</button>
-            <button type="button" id="login-button" class="hidden">ВОЙТИ</button>
-           <!-- <input type="button" id="sendVerifCode" value="Отправить код на имейл" onclick="sendVerificationCode()">-->
-            <button type="button" id="sendVerifCode" onclick="sendVerificationCode()">Отправить код на имейл</button>
-            <div id="confirmationMessage" class="confirmationMessage"></div>
-            <div id="verificationCodeWindow" class="hidden">
-                <input type="text" id="verificationCodeInput" class="hidden" placeholder="Введите код">
-                <input type="button" id="ConfirmationCodeInput" value="Подтвердить" class="hidden" onclick="verifyVerificationCode()">
-            </div>
-        </form>
-        <div id="messageOk" class="messageOk"></div>
-    </div>
-
-    <script>
-
+          
+            <script src="translation.js"></script>   
+            <script>
+              
     const urlParams = new URLSearchParams(window.location.search);
     let redirectUrl = urlParams.get('redirectUrl');
     if (redirectUrl == null) {
@@ -79,7 +83,15 @@
     redirectUrl = decodeURIComponent(redirectUrl);
     }
 
+        
         document.addEventListener('DOMContentLoaded', function() {
+                   // Установка языка при загрузке страницы
+                 
+                   const userLang = localStorage.getItem('selectedLanguage');
+        
+            setLanguage(userLang);
+            console.log('Selected Language from localStorage:', userLang);
+
             document.querySelectorAll('.toggle-password').forEach(function(element) {
                 element.addEventListener('click', function() {
                     const targetInput = document.querySelector(this.dataset.target);
@@ -92,6 +104,9 @@
                     }
                 });
             });
+
+           
+                  
 
             const confirmationMessageDiv = document.getElementById('confirmationMessage');
             const passwordInput = document.getElementById('password');
@@ -113,15 +128,28 @@
             loginButton.classList.add('inactive-button');
             loginButton.disabled = true;
 
+
+           
             if (!isPasswordValidLength) {
-                passwordMessageDiv.innerText = 'Пароль должен содержать от 6 до 20 символов';
+
+
+               // passwordMessageDiv.innerText = 'Пароль должен содержать от 6 до 20 символов';
+               passwordMessageDiv.innerText = translations[userLang]['password-message'];
                 passwordMessageDiv.style.color = 'red';
             } else {
                 passwordMessageDiv.innerText = '';
             }
 
             messageDiv.innerText = ''; // Очищаем сообщение о совпадении паролей
-        } else {
+        }
+        
+        
+        
+    
+
+        
+        
+        else {
             registrationButton.classList.remove('inactive-button');
             registrationButton.disabled = false;
             loginButton.classList.remove('inactive-button');
