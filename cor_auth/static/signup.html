@@ -40,7 +40,6 @@
                         <label for="password" data-translate="password-label">Пароль:</label>
                         <div class="input-wrapper">
                             <div id="password-message" class="error-message" data-translate="password-message"></div>
-                          <!--  <input type="password" id="password" name="password" placeholder="Введите пароль" minlength="5" maxlength="21" required> -->
                             <input type="password" id="password" name="password" placeholder="Введите пароль"   data-translate="password-placeholder" minlength="5" maxlength="21" required>
                             <span class="toggle-password" data-target="#password">👁️</span>
                         </div>
@@ -49,7 +48,6 @@
                     <div class="password-container hidden">
                         <label for="confirm-password" data-translate="confirm-password-label">Повторите пароль:</label>
                         <div class="input-wrapper">
-                           <!-- <input type="password" id="confirm-password" placeholder="Подтвердите пароль" minlength="5" maxlength="21" required>  -->
                             <input type="password" id="confirm-password" placeholder="Подтвердите пароль"  data-translate="confirm-password-placeholder" minlength="5" maxlength="21" required>
                             <span class="toggle-password" data-target="#confirm-password">👁️</span>
                         </div>
@@ -58,7 +56,9 @@
                     <button type="button" id="registration-button" class="hidden" data-translate="signup-button">Зарегистрироваться</button>
                     <button type="button" id="login-button" class="hidden" data-translate="login-button">ВОЙТИ</button>
                     <button type="button" id="sendVerifCode" onclick="sendVerificationCode()" data-translate="send-code-email">Отправить код на имейл</button>
-                    <div id="confirmationMessage" class="confirmationMessage"></div>
+                   <!-- <div id="confirmationMessage" class="confirmationMessage"></div> -->
+                    <div id="messageDivErr" data-translate="error-message"style="display: none;"></div>
+                    <div id="confirmationMessage" class="confirmationMessage" data-translate="confirmation-message"style="display: none;"></div>
                     <div id="verificationCodeWindow" class="hidden">
                         <input type="text" id="verificationCodeInput" class="hidden" placeholder="Введите код" data-translate="verification-code-placeholder">
                         <input type="button" id="ConfirmationCodeInput" value="Подтвердить" class="hidden" onclick="verifyVerificationCode()" data-translate="confirm-button">
@@ -109,6 +109,7 @@
                   
 
             const confirmationMessageDiv = document.getElementById('confirmationMessage');
+            const messageDivErr = document.getElementById('messageDivErr');
             const passwordInput = document.getElementById('password');
             const confirmPasswordInput = document.getElementById('confirm-password');
             const form = document.getElementById('registrationForm');
@@ -286,6 +287,7 @@
             var emailInput = form.elements.email;
             var messageDiv = document.getElementById("message");
             var confirmationMessageDiv = document.getElementById("confirmationMessage");
+            var messageDivErr = document.getElementById('messageDivErr');
             var email = emailInput.value;
             var sendCodeButton = document.getElementById('sendVerifCode');
 
@@ -297,11 +299,13 @@
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         console.log("Код подтверждения отправлен на вашу электронную почту.");
-                        confirmationMessageDiv.innerText = "Код подтверждения выслан Вам на имейл!";
+                     //   confirmationMessageDiv.innerText = "Код подтверждения выслан Вам на имейл!";
+                        confirmationMessageDiv.textContent = translations[userLang]["confirmation-message"];
                         confirmationMessageDiv.style.color = 'green';
+                        confirmationMessageDiv.style.display = 'block';
 
                         showVerificationCodeInput();
-                        messageDiv.style.display = 'none';
+                        messageDivErr.style.display = 'none';
 
                         document.getElementById('ConfirmationCodeInput').style.display = 'block';
                         document.getElementById('verificationCodeInput').style.display = 'block';
@@ -310,8 +314,9 @@
                     } else {
                         var error = JSON.parse(xhr.responseText);
                         console.error("Произошла ошибка при отправке кода подтверждения на почту.");
-                        messageDiv.innerText = error.detail || "Произошла ошибка при отправке кода подтверждения на почту.";
-                        messageDiv.style.color = 'red';
+                        messageDivErr.innerText = error.detail || "Произошла ошибка при отправке кода подтверждения на почту.";
+                        messageDivErr.style.color = 'red';
+                        confirmationMessageDiv.style.display = 'block';
                     }
                 }
             };
