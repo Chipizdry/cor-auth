@@ -22,7 +22,18 @@ body, html {
     text-align: center;
 }
 
+#back-link {
+  /*  position: absolute; */
+  text-align: left;
+    top: 10px;
+    left: -50px;
+    text-decoration: none;
+    color: #007bff; /* цвет ссылки */
+}
 
+#back-link:hover {
+    text-decoration: underline;
+}
 
 form {
     display: flex;

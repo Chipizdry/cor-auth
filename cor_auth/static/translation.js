@@ -11,23 +11,8 @@ function setLanguage(language) {
     localStorage.setItem('selectedLanguage', language);
 }
 
-function setLanguage(language) {
-    const elements = document.querySelectorAll("[data-translate]");
-    elements.forEach(element => {
-        const key = element.getAttribute("data-translate");
-        if (translations[language] && translations[language][key]) {
-            if (element.tagName === 'INPUT' && element.type === 'text') {
-                element.placeholder = translations[language][key];
-            } else {
-                element.textContent = translations[language][key];
-            }
-        }
-    });
-    localStorage.setItem('selectedLanguage', language);
-}
-
-
 */
+
 function setLanguage(language) {
     const elements = document.querySelectorAll("[data-translate]");
     elements.forEach(element => {
@@ -77,7 +62,7 @@ const translations = {
         "forgot-password-button": "Забыли пароль?",
         "message-ok": "Успешный вход",
         "message-error": "Произошла ошибка, пожалуйста, попробуйте снова",
-        "confirmation-message": "Код подтверждения отправлен на вашу почту",
+        "confirmation-message": "Код подтверждения выслан Вам на имейл!",
         "send-code-on-male": "Отправить код на имейл",
         "invalid-code": "Неверный код, пожалуйста, попробуйте снова",
         "password-mismatch": "Пароли не совпадают",
@@ -87,7 +72,11 @@ const translations = {
         "signup-button": "Зарегистрироваться",
         "password-message": "Пароль должен содержать от 8 до 15 символов",
         "verification-code-placeholder": "Введите код",
-        "confirm-button": "Подтвердить"
+        "confirm-button": "Подтвердить",
+        "send-again-countdown": "Отправить ещё через {countdown}с",
+        "send-code-email": "Отправить код на имейл",
+        "error-message": "Произошла ошибка при отправке кода подтверждения на почту.",
+        "back-link-text": "<<<назад<<<"
     },
     en: {
         title: "Authorization",
@@ -101,7 +90,7 @@ const translations = {
         "forgot-password-button": "Forgot Password?",
         "message-ok": "Successful Login",
         "message-error": "An error occurred, please try again",
-        "confirmation-message": "Confirmation code sent to your email",
+        "confirmation-message": "Confirmation code sent to your email!",
         "send-code-on-male": "Send code to email",
         "invalid-code": "Invalid code, please try again",
         "password-mismatch": "Passwords do not match",
@@ -111,7 +100,11 @@ const translations = {
         "signup-button": "Sign Up",
         "password-message": "Password must be between 8 and 15 characters long",
         "verification-code-placeholder": "Enter code",
-        "confirm-button": "Confirm"
+        "confirm-button": "Confirm",
+        "send-again-countdown": "Send again in {countdown}s",
+        "send-code-email": "Send code to email",
+        "error-message": "An error occurred while sending the verification code to your email.",
+        "back-link-text": "<<<back<<<"
     },
     zh: {
         title: "授权",
@@ -135,7 +128,11 @@ const translations = {
         "signup-button": "注册",
         "password-message": "密码长度必须在8到15个字符之间",
         "verification-code-placeholder": "输入代码",
-        "confirm-button": "确认"
+        "confirm-button": "确认",
+        "send-again-countdown": "{countdown}秒后再发送",
+        "send-code-email": "发送验证码到邮箱",
+        "error-message": "发送验证码到您的邮箱时出错。",
+        "back-link-text": "<<<返回<<<"
     },
     uk: {
         title: "Авторизація",
@@ -159,5 +156,9 @@ const translations = {
         "signup-button": "Зареєструватися",
         "password-message": "Пароль має містити від 8 до 15 символів",
         "verification-code-placeholder": "Введіть код",
-        "confirm-button": "Підтвердити"
+        "confirm-button": "Підтвердити",
+        "send-again-countdown": "Надіслати знову через {countdown}с",
+        "send-code-email": "Надіслати код на електронну пошту",
+        "error-message": "Сталася помилка під час відправлення коду підтвердження на електронну пошту.",
+        "back-link-text": "<<<назад<<<"
     },}

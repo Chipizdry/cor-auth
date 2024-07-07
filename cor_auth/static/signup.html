@@ -28,6 +28,8 @@
         </head>
         <body>
             <div class="container">
+             <!--   <a href="login.html" id="back-link"><<<назад<<<</a>-->
+                <a href="login.html" id="back-link" data-translate="back-link-text"><<<назад<<<</a>
                 <h1 data-translate="signup-title">Регистрация</h1>
                 <form id="registrationForm">
                     <label for="email" data-translate="email-label">Электронная почта:</label>
@@ -54,8 +56,8 @@
         
                     <button type="button" id="registration-button" class="hidden" data-translate="signup-button">Зарегистрироваться</button>
                     <button type="button" id="login-button" class="hidden" data-translate="login-button">ВОЙТИ</button>
-        
-                    <button type="button" id="sendVerifCode" onclick="sendVerificationCode()" data-translate="send-code-on-male">Отправить код на имейл</button>
+                    <button type="button" id="sendVerifCode" onclick="sendVerificationCode()" data-translate="send-code-email">Отправить код на имейл</button>
+                   <!-- <button type="button" id="sendVerifCode" onclick="sendVerificationCode()" data-translate="send-code-on-male">Отправить код на имейл</button>-->
                     <div id="confirmationMessage" class="confirmationMessage"></div>
                     <div id="verificationCodeWindow" class="hidden">
                    <!--     <input type="text" id="verificationCodeInput" class="hidden" placeholder="Введите код">
@@ -269,7 +271,19 @@
             });
         });
 
+/*
+        window.switchLanguage = function(userLang) {
+        setLanguage(userLang);
+    }
+*/
+
+        sendCodeButton.addEventListener('click', sendVerificationCode);
+
         function sendVerificationCode() {
+
+            const userLang = localStorage.getItem('selectedLanguage');
+        
+             
             var form = document.getElementById("registrationForm");
             var emailInput = form.elements.email;
             var messageDiv = document.getElementById("message");
@@ -284,7 +298,6 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                      //  alert('Код подтверждения отправлен на Вашу почту!');
                         console.log("Код подтверждения отправлен на вашу электронную почту.");
                         confirmationMessageDiv.innerText = "Код подтверждения выслан Вам на имейл!";
                         confirmationMessageDiv.style.color = 'green';
@@ -294,29 +307,8 @@
 
                         document.getElementById('ConfirmationCodeInput').style.display = 'block';
                         document.getElementById('verificationCodeInput').style.display = 'block';
-
-                             // Блокируем кнопку и устанавливаем обратный отсчет
-                //var sendCodeButton = document.getElementById('sendVerifCode');
-
-
-                sendCodeButton.disabled = true;
-                        sendCodeButton.classList.add('inactive-button');
-                        
-                        var countdown = 30;
-                        sendCodeButton.textContent = `Отправить ещё через ${countdown}с`;
-
-                        var interval = setInterval(function() {
-                            countdown--;
-                            sendCodeButton.textContent = `Отправить ещё через ${countdown}с`;
-                            if (countdown <= 0) {
-                                clearInterval(interval);
-                                sendCodeButton.disabled = false;
-                                sendCodeButton.classList.remove('inactive-button');
-                                sendCodeButton.textContent = 'Отправить код на имейл';
-                                //confirmationMessageDiv.style.display = 'none';
-                            }
-                        }, 1000);
-
+                        startCountdown(sendCodeButton, userLang);
+  
                     } else {
                         var error = JSON.parse(xhr.responseText);
                         console.error("Произошла ошибка при отправке кода подтверждения на почту.");
@@ -329,12 +321,35 @@
             xhr.send(JSON.stringify({ email: email }));
         }
 
+
+
+
+function startCountdown(button, language) {
+        button.disabled = true;
+        button.classList.add('inactive-button');
+        
+        let countdown = 30;
+        button.textContent = translations[language]['send-again-countdown'].replace('{countdown}', countdown);
+
+        const interval = setInterval(function() {
+            countdown--;
+            button.textContent = translations[language]['send-again-countdown'].replace('{countdown}', countdown);
+            if (countdown <= 0) {
+                clearInterval(interval);
+                button.disabled = false;
+                button.classList.remove('inactive-button');
+                button.textContent = translations[language]['send-code-email'];
+            }
+        }, 1000);
+    }
+
         function showVerificationCodeInput() {
             var verificationCodeWindow = document.getElementById("verificationCodeWindow");
             verificationCodeWindow.style.display = "block";
         }
 
         function verifyVerificationCode() {
+            const userLang = localStorage.getItem('selectedLanguage');
             var verificationCodeInput = document.getElementById("verificationCodeInput");
             var emailInput = document.getElementById("email");
             var confirmationMessageDiv = document.getElementById("confirmationMessage");
