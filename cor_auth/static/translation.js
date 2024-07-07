@@ -1,17 +1,8 @@
 
 /*
-function setLanguage(language) {
-    const elements = document.querySelectorAll("[data-translate]");
-    elements.forEach(element => {
-        const key = element.getAttribute("data-translate");
-        if (translations[language] && translations[language][key]) {
-            element.textContent = translations[language][key];
-        }
-    });
-    localStorage.setItem('selectedLanguage', language);
-}
 
-*/
+
+
 
 function setLanguage(language) {
     const elements = document.querySelectorAll("[data-translate]");
@@ -31,12 +22,30 @@ function setLanguage(language) {
     });
     localStorage.setItem('selectedLanguage', language);
 }
+*/
+
+
+function setLanguage(language) {
+    const elements = document.querySelectorAll("[data-translate]");
+    elements.forEach(element => {
+        const key = element.getAttribute("data-translate");
+        if (translations[language] && translations[language][key]) {
+            if (element.tagName === 'INPUT' && (element.type === 'text' || element.type === 'password')) {
+                element.placeholder = translations[language][key];
+            } else if (element.tagName === 'BUTTON') {
+                element.textContent = translations[language][key];
+            } else {
+                element.textContent = translations[language][key];
+            }
+        }
+    });
+    localStorage.setItem('selectedLanguage', language);
+}
+
 
 function switchLanguage(language) {
     setLanguage(language);
 }
-
-
 
 document.addEventListener('DOMContentLoaded', function() {
     const userLang = localStorage.getItem('selectedLanguage') || navigator.language || navigator.userLanguage;
@@ -76,7 +85,9 @@ const translations = {
         "send-again-countdown": "Отправить ещё через {countdown}с",
         "send-code-email": "Отправить код на имейл",
         "error-message": "Произошла ошибка при отправке кода подтверждения на почту.",
-        "back-link-text": "<<<назад<<<"
+        "back-link-text": "<<<назад<<<",
+        "password-placeholder": "Введите пароль",
+        "confirm-password-placeholder": "Подтвердите пароль"
     },
     en: {
         title: "Authorization",
@@ -104,7 +115,9 @@ const translations = {
         "send-again-countdown": "Send again in {countdown}s",
         "send-code-email": "Send code to email",
         "error-message": "An error occurred while sending the verification code to your email.",
-        "back-link-text": "<<<back<<<"
+        "back-link-text": "<<<back<<<",
+        "password-placeholder": "Enter password",
+        "confirm-password-placeholder": "Confirm password"
     },
     zh: {
         title: "授权",
@@ -132,7 +145,9 @@ const translations = {
         "send-again-countdown": "{countdown}秒后再发送",
         "send-code-email": "发送验证码到邮箱",
         "error-message": "发送验证码到您的邮箱时出错。",
-        "back-link-text": "<<<返回<<<"
+        "back-link-text": "<<<返回<<<",
+        "password-placeholder": "输入密码",
+        "confirm-password-placeholder": "确认密码"
     },
     uk: {
         title: "Авторизація",
@@ -160,5 +175,7 @@ const translations = {
         "send-again-countdown": "Надіслати знову через {countdown}с",
         "send-code-email": "Надіслати код на електронну пошту",
         "error-message": "Сталася помилка під час відправлення коду підтвердження на електронну пошту.",
-        "back-link-text": "<<<назад<<<"
+        "back-link-text": "<<<назад<<<",
+        "password-placeholder": "Введіть пароль",
+        "confirm-password-placeholder": "Підтвердіть пароль"
     },}

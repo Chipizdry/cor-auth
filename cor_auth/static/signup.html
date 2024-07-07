@@ -28,7 +28,7 @@
         </head>
         <body>
             <div class="container">
-             <!--   <a href="login.html" id="back-link"><<<назад<<<</a>-->
+           
                 <a href="login.html" id="back-link" data-translate="back-link-text"><<<назад<<<</a>
                 <h1 data-translate="signup-title">Регистрация</h1>
                 <form id="registrationForm">
@@ -39,9 +39,9 @@
                     <div class="password-container hidden">
                         <label for="password" data-translate="password-label">Пароль:</label>
                         <div class="input-wrapper">
-                           <!-- <div id="password-message" class="error-message"></div> -->
                             <div id="password-message" class="error-message" data-translate="password-message"></div>
-                            <input type="password" id="password" name="password" placeholder="Введите пароль" minlength="5" maxlength="21" required>
+                          <!--  <input type="password" id="password" name="password" placeholder="Введите пароль" minlength="5" maxlength="21" required> -->
+                            <input type="password" id="password" name="password" placeholder="Введите пароль"   data-translate="password-placeholder" minlength="5" maxlength="21" required>
                             <span class="toggle-password" data-target="#password">👁️</span>
                         </div>
                     </div>
@@ -49,7 +49,8 @@
                     <div class="password-container hidden">
                         <label for="confirm-password" data-translate="confirm-password-label">Повторите пароль:</label>
                         <div class="input-wrapper">
-                            <input type="password" id="confirm-password" placeholder="Подтвердите пароль" minlength="5" maxlength="21" required>
+                           <!-- <input type="password" id="confirm-password" placeholder="Подтвердите пароль" minlength="5" maxlength="21" required>  -->
+                            <input type="password" id="confirm-password" placeholder="Подтвердите пароль"  data-translate="confirm-password-placeholder" minlength="5" maxlength="21" required>
                             <span class="toggle-password" data-target="#confirm-password">👁️</span>
                         </div>
                     </div>
@@ -57,11 +58,8 @@
                     <button type="button" id="registration-button" class="hidden" data-translate="signup-button">Зарегистрироваться</button>
                     <button type="button" id="login-button" class="hidden" data-translate="login-button">ВОЙТИ</button>
                     <button type="button" id="sendVerifCode" onclick="sendVerificationCode()" data-translate="send-code-email">Отправить код на имейл</button>
-                   <!-- <button type="button" id="sendVerifCode" onclick="sendVerificationCode()" data-translate="send-code-on-male">Отправить код на имейл</button>-->
                     <div id="confirmationMessage" class="confirmationMessage"></div>
                     <div id="verificationCodeWindow" class="hidden">
-                   <!--     <input type="text" id="verificationCodeInput" class="hidden" placeholder="Введите код">
-                        <input type="button" id="ConfirmationCodeInput" value="Подтвердить" class="hidden" onclick="verifyVerificationCode()"> -->
                         <input type="text" id="verificationCodeInput" class="hidden" placeholder="Введите код" data-translate="verification-code-placeholder">
                         <input type="button" id="ConfirmationCodeInput" value="Подтвердить" class="hidden" onclick="verifyVerificationCode()" data-translate="confirm-button">
                     </div>
