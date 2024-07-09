@@ -1,0 +1,50 @@
+2024-07-08 11:04:27,104 [ERROR]: An unhandled exception occurred
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "C:\Program Files\Python\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python\Lib\multiprocessing\spawn.py", line 131, in _main
+    prepare(preparation_data)
+  File "C:\Program Files\Python\Lib\multiprocessing\spawn.py", line 246, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "C:\Program Files\Python\Lib\multiprocessing\spawn.py", line 297, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 286, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "c:\Users\chipi\Documents\GitHub\cor-auth\main.py", line 11, in <module>
+    from cor_auth.routes import auth
+  File "c:\Users\chipi\Documents\GitHub\cor-auth\cor_auth\routes\auth.py", line 31, in <module>
+    from cor_auth.services.email import send_email_code, send_email_code_forgot_password
+  File "c:\Users\chipi\Documents\GitHub\cor-auth\cor_auth\services\email.py", line 3, in <module>
+    from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
+  File "C:\Users\chipi\AppData\Roaming\Python\Python312\site-packages\fastapi_mail\__init__.py", line 5, in <module>
+    from . import email_utils
+  File "C:\Users\chipi\AppData\Roaming\Python\Python312\site-packages\fastapi_mail\email_utils\__init__.py", line 1, in <module>
+    from fastapi_mail.email_utils.email_check import DefaultChecker, WhoIsXmlApi
+  File "C:\Users\chipi\AppData\Roaming\Python\Python312\site-packages\fastapi_mail\email_utils\email_check.py", line 10, in <module>
+    from redis import asyncio as aioredis
+  File "C:\Users\chipi\AppData\Roaming\Python\Python312\site-packages\redis\__init__.py", line 53, in <module>
+    __version__ = metadata.version("redis")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python\Lib\importlib\metadata\__init__.py", line 889, in version
+    return distribution(distribution_name).version
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python\Lib\importlib\metadata\__init__.py", line 862, in distribution
+    return Distribution.from_name(distribution_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python\Lib\importlib\metadata\__init__.py", line 397, in from_name
+    return next(cls.discover(name=name))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python\Lib\importlib\metadata\__init__.py", line 795, in <genexpr>
+    path.search(prepared) for path in map(FastPath, paths)
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python\Lib\importlib\metadata\__init__.py", line 693, in search
+    return self.lookup(self.mtime).search(name)
+                       ^^^^^^^^^^
+  File "C:\Program Files\Python\Lib\importlib\metadata\__init__.py", line 698, in mtime
+    return os.stat(self.root).st_mtime
+           ^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
