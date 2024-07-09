@@ -264,10 +264,34 @@
 
 <script>
     // Установка языка при загрузке страницы
+    /*
     document.addEventListener('DOMContentLoaded', function() {
         const userLang = navigator.language || navigator.userLanguage;
         const defaultLang = userLang.startsWith('ru') ? 'ru' : userLang.startsWith('en') ? 'en' : userLang.startsWith('zh') ? 'zh' : 'ru';
         setLanguage(defaultLang);
+*/
+
+document.addEventListener('DOMContentLoaded', function() {
+    const storedLang = localStorage.getItem('selectedLanguage');
+    const browserLang = navigator.language || navigator.userLanguage;
+    let defaultLang;
+
+    if (storedLang) {
+        defaultLang = storedLang;
+    } else if (browserLang) {
+        defaultLang = browserLang.startsWith('ru') ? 'ru' :
+                      browserLang.startsWith('en') ? 'en' :
+                      browserLang.startsWith('zh') ? 'zh' : 
+                      browserLang.startsWith('uk') ? 'uk':'ru';
+    } else {
+        defaultLang = 'ru';
+    }
+
+    setLanguage(defaultLang);
+
+     // Установка значения селектора языка на загруженный язык
+     const langSelect = document.getElementById('lang-select');
+    langSelect.value = defaultLang;
 
         // Инициализация Select2 для выпадающего списка языка
         $('#lang-select').select2({
@@ -276,6 +300,9 @@
             minimumResultsForSearch: Infinity
         });
     });
+  
+
+
 
     // Функция для отображения изображений в Select2
     function formatState(state) {

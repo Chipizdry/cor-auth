@@ -29,7 +29,7 @@
         <body>
             <div class="container">
            
-                <a href="login.html" id="back-link" data-translate="back-link-text"><<<назад<<<</a>
+                <a href="/" id="back-link" data-translate="back-link-text"><<<назад<<<</a>
                 <h1 data-translate="signup-title">Регистрация</h1>
                 <form id="registrationForm">
                     <label for="email" data-translate="email-label">Электронная почта:</label>
@@ -306,7 +306,7 @@
 
                         showVerificationCodeInput();
                         messageDivErr.style.display = 'none';
-
+                        messageDiv.style.display = 'none';
                         document.getElementById('ConfirmationCodeInput').style.display = 'block';
                         document.getElementById('verificationCodeInput').style.display = 'block';
                         startCountdown(sendCodeButton, userLang);
@@ -314,9 +314,10 @@
                     } else {
                         var error = JSON.parse(xhr.responseText);
                         console.error("Произошла ошибка при отправке кода подтверждения на почту.");
-                        messageDivErr.innerText = error.detail || "Произошла ошибка при отправке кода подтверждения на почту.";
-                        messageDivErr.style.color = 'red';
-                        confirmationMessageDiv.style.display = 'block';
+                        messageDiv.innerText = error.detail || "Произошла ошибка при отправке кода подтверждения на почту.";
+                        messageDiv.style.color = 'red';
+                        confirmationMessageDiv.style.display = 'none';
+                       
                     }
                 }
             };

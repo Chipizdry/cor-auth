@@ -1,15 +1,20 @@
 
 /*
 
+
+
+
 function setLanguage(language) {
     const elements = document.querySelectorAll("[data-translate]");
     elements.forEach(element => {
         const key = element.getAttribute("data-translate");
         if (translations[language] && translations[language][key]) {
-            if (element.tagName === 'INPUT' && (element.type === 'text' || element.type === 'password')) {
-                element.placeholder = translations[language][key];
-            } else if (element.tagName === 'BUTTON') {
-                element.textContent = translations[language][key];
+            if (element.tagName === 'INPUT' && (element.type === 'text' || element.type === 'button')) {
+                if (element.type === 'text') {
+                    element.placeholder = translations[language][key];
+                } else if (element.type === 'button') {
+                    element.value = translations[language][key];
+                }
             } else {
                 element.textContent = translations[language][key];
             }
@@ -17,10 +22,7 @@ function setLanguage(language) {
     });
     localStorage.setItem('selectedLanguage', language);
 }
-
-
 */
-
 
 
 function setLanguage(language) {
@@ -51,7 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const userLang = localStorage.getItem('selectedLanguage') || navigator.language || navigator.userLanguage;
     const defaultLang = userLang.startsWith('ru') ? 'ru' : 
                         userLang.startsWith('en') ? 'en' : 
-                        userLang.startsWith('zh') ? 'zh' : 'uk';
+                        userLang.startsWith('zh') ? 'zh' :
+                        userLang.startsWith('uk') ? 'uk' :'ru';
     setLanguage(defaultLang);
 });
 
