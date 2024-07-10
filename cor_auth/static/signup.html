@@ -368,7 +368,8 @@ function startCountdown(button, language) {
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        confirmationMessageDiv.innerText = "Ваша почта успешно подтверждена!";
+                        //confirmationMessageDiv.innerText = "Ваша почта успешно подтверждена!";
+                        confirmationMessageDiv.innerText = translations[userLang]["confirmationMessage"]; 
                 confirmationMessageDiv.style.color = 'green';
                 confirmationMessageDiv.style.display = 'block'; // confirmationMessageDiv.style.display = 'none';
                       
