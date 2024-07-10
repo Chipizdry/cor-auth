@@ -1,0 +1,10 @@
+2024-07-10 21:40:31,741 [DEBUG]: Updated verification code in the existing record
+2024-07-10 21:40:31,744 [DEBUG]: chipizdry@gmail.com - Check your email for verification code.
+2024-07-10 21:40:31,745 [DEBUG]: Sending email to chipizdry@gmail.com
+2024-07-10 21:40:32,604 [DEBUG]: Sending email to chipizdry@gmail.com done!
+2024-07-10 21:40:50,522 [DEBUG]: Your chipizdry@gmail.com is confirmed
+2024-07-10 21:41:08,114 [DEBUG]: Password has changed
+2024-07-10 21:41:08,114 [DEBUG]: chipizdry@gmail.com - changed his password
+2024-07-10 21:41:13,101 [DEBUG]: Access token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiI5ZTQ3MzcxYy0zNWJmLTRiODgtYjU3NC0yNWMyYWFmNjQxY2IiLCJpYXQiOjE3MjA2MzY4NzMsImV4cCI6MTcyMDY0MDQ3Mywic2NwIjoiYWNjZXNzX3Rva2VuIn0.xY09etFLuRN21QMpd3rdqMhvISeXTWnKuUUxKBsCNaw
+2024-07-10 21:41:13,102 [DEBUG]: refresh token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiI5ZTQ3MzcxYy0zNWJmLTRiODgtYjU3NC0yNWMyYWFmNjQxY2IiLCJpYXQiOjE3MjA2MzY4NzMsImV4cCI6MTcyMTI0MTY3Mywic2NwIjoicmVmcmVzaF90b2tlbiJ9.iMtPIBjynL5ldoGVGPPhYniJiakzBv7BtXnk8d7ag0g
+2024-07-10 21:41:13,118 [DEBUG]: chipizdry@gmail.com  login success
