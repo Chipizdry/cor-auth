@@ -21,7 +21,7 @@
         <meta name="theme-color" content="#ffffff">
     
         <title>Авторизация и регистрация</title>
-        <link rel="stylesheet" type="text/css" href="static/styles.css">
+        <link rel="stylesheet" type="text/css" href="styles.css">
         <meta name="google-signin-client_id" content="161352424929-s3ris9429m994vcm2m35epe6eu4538el.apps.googleusercontent.com">
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <meta name="facebook-sdk-version" content="v15.0" />
@@ -37,6 +37,7 @@
     
             .custom-btn img {
                 margin-right: 10px;
+                align-items: center;
             }
     
             .g-signin2 {
@@ -75,7 +76,7 @@
             </select>
         </div>
     </div>
-    <script src="static/translation.js"></script>
+    <script src="translation.js"></script>
     <h1 data-translate="title">Authorization and Registration</h1>
     <form id="login-form">
         <label for="email" data-translate="email-label">Email:</label>
@@ -87,11 +88,11 @@
     <div id="message"></div>
     <p>
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <button class="google-signin-btn" onclick="signInWithGoogle()">
+        <button class="google-signin-btn" id='google-btn' onclick="signInWithGoogle()">
             <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Icon" width="20" height="20"> <span data-translate="login-button-google">Login</span>
         </button>
     </p>
-    <button class="custom-btn facebook-btn" onclick="signInWithFacebook()">
+    <button class="custom-btn facebook-btn" id='facebook-btn' onclick="signInWithFacebook()">
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Icon" width="20" height="20"> <span data-translate="login-button-facebook"></span>
     </button>
 
@@ -102,22 +103,82 @@
 
 
 
+  <script>
+    /*
+    document.addEventListener('DOMContentLoaded', function() {
+        const GoogleBtn = document.getElementById("google-btn");
+        const FaceBookBtn = document.getElementById("facebook-btn");
+        console.log('DOM fully loaded and parsed');
+        // Делаем AJAX-запрос к Python приложению для получения настроек
+        fetch('/get_social_login_settings')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Settings received:', data);
+
+             
+
+
+                // Показываем или скрываем кнопки в зависимости от настроек
+                
+                if (data.google_login===false) {
+                    console.log('Hiding Google login button');
+                    GoogleBtn.style.display = 'none';
+                }
+                if (!data.facebook_login) {
+                    console.log('Hiding Facebook login button');
+                    FaceBookBtn.style.display = 'none';
+                }
+                
+            })
+            .catch(error => console.error('Error fetching settings:', error));
+
+
+          //  GoogleBtn.style.display = 'none';
+          //  FaceBookBtn.style.display = 'none';
+    });
+    */
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const GoogleBtn = document.getElementById('google-btn');
+        const FaceBookBtn = document.getElementById('facebook-btn');
+        
+        console.log('DOM fully loaded and parsed');
+        
+        // Делаем AJAX-запрос к Python приложению для получения настроек
+        fetch('/get_social_login_settings')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Settings received:', data);
+
+                // Приводим строковые значения к булевым
+                const googleLoginEnabled = data.google_login === 'True';
+                const facebookLoginEnabled = data.facebook_login === 'True';
+
+                console.log('googleLoginEnabled:', googleLoginEnabled);
+                console.log('facebookLoginEnabled:', facebookLoginEnabled);
+
+                // Показываем или скрываем кнопки в зависимости от настроек
+                if (!googleLoginEnabled) {
+                    console.log('Hiding Google login button');
+                    GoogleBtn.style.display = 'none';
+                }
+                if (!facebookLoginEnabled) {
+                    console.log('Hiding Facebook login button');
+                    FaceBookBtn.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error fetching settings:', error));
+
+        // Для проверки:
+        // GoogleBtn.style.display = 'none';
+        // FaceBookBtn.style.display = 'none';
+    });
+
+
+</script>  
+
 <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Делаем AJAX-запрос к Python приложению для получения настроек
-            fetch('/get_social_login_settings')
-                .then(response => response.json())
-                .then(data => {
-                    // Показываем или скрываем кнопки в зависимости от настроек
-                    if (!data.google_login) {
-                        document.getElementById('google-signin-btn').style.display = 'none';
-                    }
-                    if (!data.facebook_login) {
-                        document.getElementById('custom-btn facebook-btn').style.display = 'none';
-                    }
-                })
-                .catch(error => console.error('Error fetching settings:', error));
-        });
+       
 
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -272,21 +333,15 @@
         });
     }
 
-    window.onload = function() {
-        loadGoogleAPI();
-        setLanguage(defaultLang); // Установка языка при загрузке страницы
-    };
+  //  window.onload = function() {
+  //      loadGoogleAPI();
+  //      setLanguage(defaultLang); // Установка языка при загрузке страницы
+  //  };
 </script>
 
 
 <script>
-    // Установка языка при загрузке страницы
-    /*
-    document.addEventListener('DOMContentLoaded', function() {
-        const userLang = navigator.language || navigator.userLanguage;
-        const defaultLang = userLang.startsWith('ru') ? 'ru' : userLang.startsWith('en') ? 'en' : userLang.startsWith('zh') ? 'zh' : 'ru';
-        setLanguage(defaultLang);
-*/
+  
 
 document.addEventListener('DOMContentLoaded', function() {
     const storedLang = localStorage.getItem('selectedLanguage');
@@ -326,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!state.id) {
             return state.text;
         }
-        var baseUrl = 'static/flags';
+        var baseUrl = 'flags';
         var $state = $(
             '<span><img src="' + baseUrl + '/' + state.element.getAttribute('data-icon') + '" class="flag-img" /> ' + state.text + '</span>'
         );
