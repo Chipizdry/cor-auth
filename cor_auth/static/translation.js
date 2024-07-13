@@ -78,7 +78,8 @@ const translations = {
         "error-message": "Произошла ошибка при отправке кода подтверждения на почту.",
         "send-code-on-male": "Отправить код на имейл",
         "invalid-code": "Неверный код, пожалуйста, попробуйте снова",
-        "password-mismatch": "Пароли не совпадают",
+        "passwordsDoNotMatch": 'Пароли не совпадают!',
+        "passwordsMatch": 'Пароли совпадают!',
         "password-requirements": "Пароль должен быть от 8 до 15 символов",
         "signup-title": "Регистрация",
         "confirm-password-label": "Подтвердите пароль:",
@@ -93,7 +94,9 @@ const translations = {
         "password-placeholder": "Введите пароль",
         "confirm-password-placeholder": "Подтвердите пароль",
         "confirmationMessage": "Ваша почта успешно подтверждена!",
-        "heading" : "Сброс пароля"
+        "registrationSuccess": 'Регистрация прошла успешно!',
+        "heading" : "Сброс пароля",
+        'loginSuccess': 'Вход выполнен успешно!'
     },
     en: {
         title: "Authorization",
@@ -111,7 +114,8 @@ const translations = {
         "error-message": "An error occurred while sending the verification code to your email.",
         "send-code-on-male": "Send code to email",
         "invalid-code": "Invalid code, please try again",
-        "password-mismatch": "Passwords do not match",
+        "passwordsDoNotMatch": 'Passwords do not match!',
+        "passwordsMatch": 'Passwords match!',
         "password-requirements": "Password must be 8 to 15 characters long",
         "signup-title": "Registration",
         "confirm-password-label": "Confirm Password:",
@@ -126,7 +130,9 @@ const translations = {
         "password-placeholder": "Enter password",
         "confirm-password-placeholder": "Confirm password",
         "confirmationMessage" : "Your email has been successfully confirmed!",
-        "heading" : "Password Reset"
+        "registrationSuccess": 'Registration successful!',
+        "heading" : "Password Reset",
+        'loginSuccess': 'Login successful!'
     },
     zh: {
         title: "授权",
@@ -144,7 +150,8 @@ const translations = {
         "error-message": "发送验证码到您的邮箱时出错。",
         "send-code-on-male": "发送验证码到邮箱",
         "invalid-code": "无效的验证码，请重试",
-        "password-mismatch": "密码不匹配",
+        "passwordsDoNotMatch": '密码不匹配!',
+        "passwordsMatch": '密码匹配!',
         "password-requirements": "密码长度必须为8到15个字符",
         "signup-title": "注册",
         "confirm-password-label": "确认密码：",
@@ -159,7 +166,9 @@ const translations = {
         "password-placeholder": "输入密码",
         "confirm-password-placeholder": "确认密码",
         "confirmationMessage" : "您的邮件已成功确认！",
-        "heading" : "重设密码"
+        "registrationSuccess": '注册成功！',
+        "heading" : "重设密码",
+        'loginSuccess': '登录成功！'
     },
     uk: {
         title: "Авторизація",
@@ -177,7 +186,8 @@ const translations = {
         "error-message": "Сталася помилка під час відправлення коду підтвердження на електронну пошту.",
         "send-code-on-male": "Надіслати код на електронну пошту",
         "invalid-code": "Невірний код, спробуйте ще раз",
-        "password-mismatch": "Паролі не співпадають",
+        "passwordsDoNotMatch": 'Паролі не співпадають!',
+        "passwordsMatch": 'Паролі співпадають!',
         "password-requirements": "Пароль повинен бути від 8 до 15 символів",
         "signup-title": "Реєстрація",
         "confirm-password-label": "Підтвердіть пароль:",
@@ -192,5 +202,7 @@ const translations = {
         "password-placeholder": "Введіть пароль",
         "confirm-password-placeholder": "Підтвердіть пароль",
         "confirmationMessage" : "Вашу пошту успішно підтверджено!",
-        "heading" : "Скидання пароля"
+        "registrationSuccess": 'Реєстрація пройшла успішно!',
+        "heading" : "Скидання пароля",
+        'loginSuccess': 'Вхід виконано успішно!'
     },}

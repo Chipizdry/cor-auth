@@ -56,7 +56,6 @@
                     <button type="button" id="registration-button" class="hidden" data-translate="signup-button">Зарегистрироваться</button>
                     <button type="button" id="login-button" class="hidden" data-translate="login-button">ВОЙТИ</button>
                     <button type="button" id="sendVerifCode" onclick="sendVerificationCode()" data-translate="send-code-email">Отправить код на имейл</button>
-                   <!-- <div id="confirmationMessage" class="confirmationMessage"></div> -->
                     <div id="messageDivErr" data-translate="error-message"style="display: none;"></div>
                     <div id="confirmationMessage" class="confirmationMessage" data-translate="confirmation-message"style="display: none;"></div>
                     <div id="verificationCodeWindow" class="hidden">
@@ -118,12 +117,12 @@
             const registrationButton = document.getElementById('registration-button');
             const loginButton = document.getElementById('login-button');
             const passwordMessageDiv = document.getElementById('password-message');
-
+           
             function checkFields() {
         const isPasswordEmpty = passwordInput.value === '';
         const isConfirmPasswordEmpty = confirmPasswordInput.value === '';
         const isPasswordValidLength = passwordInput.value.length >= 6 && passwordInput.value.length <= 20;
-
+        const userLang = localStorage.getItem('selectedLanguage');
         if (isPasswordEmpty || isConfirmPasswordEmpty || !isPasswordValidLength) {
             registrationButton.classList.add('inactive-button');
             registrationButton.disabled = true;
@@ -159,10 +158,14 @@
             passwordMessageDiv.innerText = '';
 
             if (passwordInput.value !== confirmPasswordInput.value) {
-                messageDiv.innerText = 'Пароли не совпадают!!!';
+              //  messageDiv.innerText = 'Пароли не совпадают!!!';
+              console.log("Пароли не совпадают!(((");
+                messageDiv.innerText =  translations[userLang]['passwordsDoNotMatch'];
                 messageDiv.style.color = 'red';
             } else {
-                messageDiv.innerText = 'Пароли совпадают!';
+             //   messageDiv.innerText = 'Пароли совпадают!';
+             console.log("Пароли совпадают!))");
+                messageDiv.innerText =  translations[userLang]['passwordsMatch'];
                 messageDiv.style.color = 'green';
             }
         }
@@ -211,7 +214,8 @@
                             if (xhr.status === 201) {
                                 const response = JSON.parse(xhr.responseText);
                                 console.log("Регистрация прошла успешно.");
-                                messageDiv.innerText = "Регистрация прошла успешно!";
+                              //  messageDiv.innerText = "Регистрация прошла успешно!";
+                                messageDiv.innerText =  translations[userLang]['registrationSuccess'];
                                 messageDiv.style.color = 'green';
 
                                 registrationButton.style.display = 'none';
@@ -229,7 +233,7 @@
             loginButton.addEventListener('click', () => {
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
-
+                const userLang = localStorage.getItem('selectedLanguage');
                 const loginDataParams = new URLSearchParams();
                 loginDataParams.append('username', email);
                 loginDataParams.append('password', password);
@@ -243,7 +247,8 @@
                         if (xhr.status === 200) {
                             const response = JSON.parse(xhr.responseText);
                             console.log("Вход выполнен успешно!");
-                            messageDiv.innerText = "Вход выполнен успешно!";
+                        //    messageDiv.innerText = "Вход выполнен успешно!";
+                            messageDiv.innerText =translations[userLang]['loginSuccess'];
                             messageDiv.style.color = 'green';
 
                             setTimeout(() => {
@@ -276,7 +281,7 @@
         setLanguage(userLang);
     }
 */
-
+var sendCodeButton = document.getElementById('sendVerifCode');
         sendCodeButton.addEventListener('click', sendVerificationCode);
 
         function sendVerificationCode() {
@@ -290,7 +295,7 @@
             var confirmationMessageDiv = document.getElementById("confirmationMessage");
             var messageDivErr = document.getElementById('messageDivErr');
             var email = emailInput.value;
-            var sendCodeButton = document.getElementById('sendVerifCode');
+          //  var sendCodeButton = document.getElementById('sendVerifCode');
 
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/api/auth/send_verification_code");
