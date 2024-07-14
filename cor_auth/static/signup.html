@@ -119,10 +119,10 @@
             const passwordMessageDiv = document.getElementById('password-message');
            
             function checkFields() {
-        const isPasswordEmpty = passwordInput.value === '';
-        const isConfirmPasswordEmpty = confirmPasswordInput.value === '';
-        const isPasswordValidLength = passwordInput.value.length >= 6 && passwordInput.value.length <= 20;
-        const userLang = localStorage.getItem('selectedLanguage');
+            const isPasswordEmpty = passwordInput.value === '';
+            const isConfirmPasswordEmpty = confirmPasswordInput.value === '';
+            const isPasswordValidLength = passwordInput.value.length >= 6 && passwordInput.value.length <= 20;
+            const userLang = localStorage.getItem('selectedLanguage');
         if (isPasswordEmpty || isConfirmPasswordEmpty || !isPasswordValidLength) {
             registrationButton.classList.add('inactive-button');
             registrationButton.disabled = true;
@@ -266,7 +266,8 @@
                                 }, 500);
                         } else {
                             console.error("Произошла ошибка при входе.");
-                            messageDiv.innerText = "Ошибка входа.";
+                           // messageDiv.innerText = "Ошибка входа.";
+                            messageDiv.innerText = translations[userLang]['login-error'];
                             messageDiv.style.color = 'red';
                         }
                     }
@@ -375,8 +376,8 @@ function startCountdown(button, language) {
                     if (xhr.status === 200) {
                         //confirmationMessageDiv.innerText = "Ваша почта успешно подтверждена!";
                         confirmationMessageDiv.innerText = translations[userLang]["confirmationMessage"]; 
-                confirmationMessageDiv.style.color = 'green';
-                confirmationMessageDiv.style.display = 'block'; // confirmationMessageDiv.style.display = 'none';
+                        confirmationMessageDiv.style.color = 'green';
+                        confirmationMessageDiv.style.display = 'block'; // confirmationMessageDiv.style.display = 'none';
                       
                         console.log("Код подтверждения верный.");
                       
