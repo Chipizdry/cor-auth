@@ -55,7 +55,8 @@
         
                     <button type="button" id="registration-button" class="hidden" data-translate="signup-button">Зарегистрироваться</button>
                     <button type="button" id="login-button" class="hidden" data-translate="login-button">ВОЙТИ</button>
-                    <button type="button" id="sendVerifCode" onclick="sendVerificationCode()" data-translate="send-code-email">Отправить код на имейл</button>
+                  <!-- <button type="button" id="sendVerifCode" onclick="sendVerificationCode()" data-translate="send-code-email">Отправить код на имейл</button> --> 
+                    <button type="button" id="sendVerifCode"  data-translate="send-code-email">Отправить код на имейл</button>
                     <div id="messageDivErr" data-translate="error-message"style="display: none;"></div>
                     <div id="confirmationMessage" class="confirmationMessage" data-translate="confirmation-message"style="display: none;"></div>
                     <div id="verificationCodeWindow" class="hidden">
@@ -159,12 +160,12 @@
 
             if (passwordInput.value !== confirmPasswordInput.value) {
               //  messageDiv.innerText = 'Пароли не совпадают!!!';
-              console.log("Пароли не совпадают!(((");
+                console.log("Пароли не совпадают!(((");
                 messageDiv.innerText =  translations[userLang]['passwordsDoNotMatch'];
                 messageDiv.style.color = 'red';
             } else {
              //   messageDiv.innerText = 'Пароли совпадают!';
-             console.log("Пароли совпадают!))");
+                console.log("Пароли совпадают!))");
                 messageDiv.innerText =  translations[userLang]['passwordsMatch'];
                 messageDiv.style.color = 'green';
             }
@@ -282,14 +283,57 @@
         setLanguage(userLang);
     }
 */
+document.addEventListener('DOMContentLoaded', function() {
+    var sendCodeButton = document.getElementById('sendVerifCode');
+    sendCodeButton.addEventListener('click', sendVerificationCode);
+
+    function sendVerificationCode() {
+        const userLang = localStorage.getItem('selectedLanguage');
+        var form = document.getElementById("registrationForm");
+        var emailInput = form.elements.email;
+        var messageDiv = document.getElementById("message");
+        var confirmationMessageDiv = document.getElementById("confirmationMessage");
+        var messageDivErr = document.getElementById('messageDivErr');
+        var email = emailInput.value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/api/auth/send_verification_code");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    console.log("Код подтверждения отправлен на вашу электронную почту.");
+                    confirmationMessageDiv.textContent = translations[userLang]["confirmation-message"];
+                    confirmationMessageDiv.style.color = 'green';
+                    confirmationMessageDiv.style.display = 'block';
+
+                    showVerificationCodeInput();
+                    messageDivErr.style.display = 'none';
+                    messageDiv.style.display = 'none';
+                    document.getElementById('ConfirmationCodeInput').style.display = 'block';
+                    document.getElementById('verificationCodeInput').style.display = 'block';
+                    startCountdown(sendCodeButton, userLang);
+
+                } else {
+                    var error = JSON.parse(xhr.responseText);
+                    console.error("Произошла ошибка при отправке кода подтверждения на почту.");
+                    messageDiv.innerText = error.detail || "Произошла ошибка при отправке кода подтверждения на почту.";
+                    messageDiv.style.color = 'red';
+                    confirmationMessageDiv.style.display = 'none';
+                }
+            }
+        };
+
+        xhr.send(JSON.stringify({ email: email }));
+    }
+});
+
+/*
 var sendCodeButton = document.getElementById('sendVerifCode');
         sendCodeButton.addEventListener('click', sendVerificationCode);
 
         function sendVerificationCode() {
 
-            const userLang = localStorage.getItem('selectedLanguage');
-        
-             
+            const userLang = localStorage.getItem('selectedLanguage');     
             var form = document.getElementById("registrationForm");
             var emailInput = form.elements.email;
             var messageDiv = document.getElementById("message");
@@ -297,11 +341,9 @@ var sendCodeButton = document.getElementById('sendVerifCode');
             var messageDivErr = document.getElementById('messageDivErr');
             var email = emailInput.value;
           //  var sendCodeButton = document.getElementById('sendVerifCode');
-
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/api/auth/send_verification_code");
             xhr.setRequestHeader("Content-Type", "application/json");
-
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
@@ -332,7 +374,7 @@ var sendCodeButton = document.getElementById('sendVerifCode');
             xhr.send(JSON.stringify({ email: email }));
         }
 
-
+*/
 
 
 function startCountdown(button, language) {
@@ -377,10 +419,8 @@ function startCountdown(button, language) {
                         //confirmationMessageDiv.innerText = "Ваша почта успешно подтверждена!";
                         confirmationMessageDiv.innerText = translations[userLang]["confirmationMessage"]; 
                         confirmationMessageDiv.style.color = 'green';
-                        confirmationMessageDiv.style.display = 'block'; // confirmationMessageDiv.style.display = 'none';
-                      
-                        console.log("Код подтверждения верный.");
-                      
+                        confirmationMessageDiv.style.display = 'block'; // confirmationMessageDiv.style.display = 'none';                     
+                        console.log("Код подтверждения верный.");                     
                         const containers = document.querySelectorAll('.password-container');
                         containers.forEach(container => { container.style.display = 'block'; });
                         document.getElementById('sendVerifCode').style.display = 'none';
