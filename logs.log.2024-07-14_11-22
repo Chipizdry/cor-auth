@@ -1,0 +1,12 @@
+2024-07-14 11:22:48,223 [DEBUG]: Updated verification code in the existing record
+2024-07-14 11:22:48,224 [DEBUG]: chipizdry@gmail.com - Check your email for verification code.
+2024-07-14 11:22:48,225 [DEBUG]: Sending email to chipizdry@gmail.com
+2024-07-14 11:22:49,047 [DEBUG]: Sending email to chipizdry@gmail.com done!
+2024-07-14 11:23:15,908 [DEBUG]: Your chipizdry@gmail.com is confirmed
+2024-07-14 11:23:28,979 [DEBUG]: Password has changed
+2024-07-14 11:23:28,979 [DEBUG]: chipizdry@gmail.com - changed his password
+2024-07-14 11:23:31,537 [DEBUG]: Access token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiI5ZTQ3MzcxYy0zNWJmLTRiODgtYjU3NC0yNWMyYWFmNjQxY2IiLCJpYXQiOjE3MjA5NDU0MTEsImV4cCI6MTcyMDk0OTAxMSwic2NwIjoiYWNjZXNzX3Rva2VuIn0.LWQRDHI4Pic764IWnoUuz5HY_EwGVfXmE_oDhWYC6A4
+2024-07-14 11:23:31,553 [DEBUG]: refresh token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiI5ZTQ3MzcxYy0zNWJmLTRiODgtYjU3NC0yNWMyYWFmNjQxY2IiLCJpYXQiOjE3MjA5NDU0MTEsImV4cCI6MTcyMTU1MDIxMSwic2NwIjoicmVmcmVzaF90b2tlbiJ9.fPr8jMeW_fKF1piUP_kSrAY9cqFP9y_KqE0WFjE58v0
+2024-07-14 11:23:31,557 [DEBUG]: chipizdry@gmail.com  login success
+2024-07-14 11:23:41,738 [DEBUG]: chipizdry@gmail.comAccount already exists
+2024-07-14 11:23:41,742 [DEBUG]: chipizdry@gmail.comAccount already exists

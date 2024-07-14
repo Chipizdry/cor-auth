@@ -96,7 +96,8 @@ const translations = {
         "confirmationMessage": "Ваша почта успешно подтверждена!",
         "registrationSuccess": 'Регистрация прошла успешно!',
         "heading" : "Сброс пароля",
-        'loginSuccess': 'Вход выполнен успешно!'
+        'loginSuccess': 'Вход выполнен успешно!',
+        'password-changed': 'Пароль изменён!'
     },
     en: {
         title: "Authorization",
@@ -132,7 +133,8 @@ const translations = {
         "confirmationMessage" : "Your email has been successfully confirmed!",
         "registrationSuccess": 'Registration successful!',
         "heading" : "Password Reset",
-        'loginSuccess': 'Login successful!'
+        'loginSuccess': 'Login successful!',
+        'password-changed': 'Password has been changed!'
     },
     zh: {
         title: "授权",
@@ -168,7 +170,8 @@ const translations = {
         "confirmationMessage" : "您的邮件已成功确认！",
         "registrationSuccess": '注册成功！',
         "heading" : "重设密码",
-        'loginSuccess': '登录成功！'
+        'loginSuccess': '登录成功！',
+        'password-changed': '密码已更改。'
     },
     uk: {
         title: "Авторизація",
@@ -204,5 +207,6 @@ const translations = {
         "confirmationMessage" : "Вашу пошту успішно підтверджено!",
         "registrationSuccess": 'Реєстрація пройшла успішно!',
         "heading" : "Скидання пароля",
-        'loginSuccess': 'Вхід виконано успішно!'
+        'loginSuccess': 'Вхід виконано успішно!',
+        'password-changed': 'Пароль змінено!'
     },}
