@@ -156,10 +156,16 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         defaultLang = 'en';
     }
+    localStorage.setItem('selectedLanguage', defaultLang); // Сохраняем выбранный язык в localStorage
 
+    const TestLanguage = localStorage.getItem('selectedLanguage');
+
+    // Выводим сохранённый язык в консоль
+    console.log('Сохранённый язык:', TestLanguage);
     setLanguage(defaultLang);
      // Установка значения селектора языка на загруженный язык
      const langSelect = document.getElementById('lang-select');
+
     langSelect.value = defaultLang;
 
         // Инициализация Select2 для выпадающего списка языка
